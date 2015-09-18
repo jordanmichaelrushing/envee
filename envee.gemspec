@@ -8,8 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = Envee::VERSION
   spec.authors       = ["Allen Madsen"]
   spec.email         = ["blatyo@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = 'Provides casting wrappers around fetch for environment variables.'
   spec.homepage      = ""
   spec.license       = "MIT"
 

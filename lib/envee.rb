@@ -22,16 +22,18 @@ module Envee
   def bool(*args, &block)
     value = fetch(*args, &block)
 
-    value && value !~ /0|no|false|off/i
+    value && value !~ /^(0|no|false|off|)$/i
   end
 
   def time(*args, &block)
     value = fetch(*args, &block)
+    return value if value.is_a?(Time)
     Time.parse(value).utc
   end
 
   def int_time(*args, &block)
     value = Integer(fetch(*args, &block))
+    return value if value.is_a?(Time)
     Time.at(value).utc
   end
 

@@ -124,6 +124,12 @@ describe Envee do
       end
     end
 
+    context 'when requesting a value not in env with a default block and default already is a time' do
+      it 'returns the default block value casted as time' do
+        expect(env.time('TIME'){Time.at(1)}).to eq(Time.at(1))
+      end
+    end
+
     context 'when requesting a value not in env with no default' do
       it 'raises an KeyError' do
         expect{env.time('TIME')}.to raise_error(KeyError)

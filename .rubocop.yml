@@ -8,7 +8,7 @@ AllCops:
     - '**/Gemfile'
   Exclude:
     - 'vendor/**'
-  RunRailsCops: true
+  RunRailsCops: false
 
 # Indent private/protected/public as deep as method definitions
 AccessModifierIndentation:
@@ -359,11 +359,6 @@ RaiseArgs:
 RedundantReturn:
   # When true allows code like `return x, y`.
   AllowMultipleReturnValues: false
-
-RegexpLiteral:
-  # The maximum number of (escaped) slashes that a slash-delimited regexp is
-  # allowed to have. If there are more slashes, a %r regexp shall be used.
-  MaxSlashes: 1
 
 Semicolon:
   # Allow ; to separate several expressions on the same line.

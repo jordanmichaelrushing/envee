@@ -3,6 +3,7 @@ require 'time'
 
 # Adds casting fetchers and validation for values filled with a placeholder.
 module Envee
+  # Error thrown by validate when there are missing keys
   class MissingValuesError < StandardError
     def initialize(missing_keys)
       super(
@@ -48,7 +49,7 @@ module Envee
 
   def validate!(options)
     missing = options[:placeholder] || 'CHANGEME'
-    missing_keys = select{|k, v| v.include?(missing)}.map(&:first)
+    missing_keys = select{|_k, v| v.include?(missing)}.map(&:first)
     raise MissingValuesError, missing_keys unless missing_keys.empty?
   end
 end

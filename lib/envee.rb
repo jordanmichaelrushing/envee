@@ -1,6 +1,7 @@
 require 'envee/version'
 require 'time'
 
+# Adds casting fetchers and validation for values filled with a placeholder.
 module Envee
   class MissingValuesError < StandardError
     def initialize(missing_keys)
@@ -15,14 +16,22 @@ module Envee
     Integer(fetch(*args, &block))
   end
 
+  def fl(*args, &block)
+    Float(fetch(*args, &block))
+  end
+
   def str(*args, &block)
     String(fetch(*args, &block))
+  end
+
+  def sym(*args, &block)
+    String(fetch(*args, &block)).to_sym
   end
 
   def bool(*args, &block)
     value = fetch(*args, &block)
 
-    value && value !~ /^(0|no|false|off|)$/i
+    value && value !~ /\A(0|no|false|off|nil|null|)\z/i
   end
 
   def time(*args, &block)
@@ -38,9 +47,9 @@ module Envee
   end
 
   def validate!(options)
-    missing = options[:missing_value]
+    missing = options[:placeholder] || 'CHANGEME'
     missing_keys = select{|k, v| v.include?(missing)}.map(&:first)
-    raise MissingValuesError.new(missing_keys) unless missing_keys.empty?
+    raise MissingValuesError, missing_keys unless missing_keys.empty?
   end
 end
 

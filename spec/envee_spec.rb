@@ -41,6 +41,40 @@ describe Envee do
     end
   end
 
+  describe '#fl' do
+    context 'when requesting a value in env without default' do
+      it 'returns env value casted as float' do
+        env['NUM'] = '1.0'
+        expect(env.fl('NUM')).to eq(1.0)
+      end
+    end
+
+    context 'when requesting a value not in env with a default value' do
+      it 'returns the default value casted as float' do
+        expect(env.fl('NUM', '2.1')).to eq(2.1)
+      end
+    end
+
+    context 'when requesting a value not in env with a default block' do
+      it 'returns the default block value casted as float' do
+        expect(env.fl('NUM'){'2.1'}).to eq(2.1)
+      end
+    end
+
+    context 'when requesting a value not in env with no default' do
+      it 'raises an KeyError' do
+        expect{env.fl('NUM')}.to raise_error(KeyError)
+      end
+    end
+
+    context 'when requesting a value in env that cannot be casted to float' do
+      it 'raises an ArgumentError' do
+        env['NUM'] = 'a'
+        expect{env.fl('NUM')}.to raise_error(ArgumentError)
+      end
+    end
+  end
+
   describe '#str' do
     context 'when requesting a value in env without default' do
       it 'returns env value casted as string' do
@@ -64,6 +98,33 @@ describe Envee do
     context 'when requesting a value not in env with no default' do
       it 'raises an KeyError' do
         expect{env.str('NUM')}.to raise_error(KeyError)
+      end
+    end
+  end
+
+  describe '#sym' do
+    context 'when requesting a value in env without default' do
+      it 'returns env value casted as symbol' do
+        env['NUM'] = '1'
+        expect(env.sym('NUM')).to eq(:'1')
+      end
+    end
+
+    context 'when requesting a value not in env with a default value' do
+      it 'returns the default value casted as symbol' do
+        expect(env.sym('NUM', 2)).to eq(:'2')
+      end
+    end
+
+    context 'when requesting a value not in env with a default block' do
+      it 'returns the default block value casted as symbol' do
+        expect(env.sym('NUM'){2}).to eq(:'2')
+      end
+    end
+
+    context 'when requesting a value not in env with no default' do
+      it 'raises an KeyError' do
+        expect{env.sym('NUM')}.to raise_error(KeyError)
       end
     end
   end

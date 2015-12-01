@@ -47,7 +47,7 @@ module Envee
     Time.at(value).utc
   end
 
-  def validate!(options)
+  def validate!(options={})
     missing = options[:placeholder] || 'CHANGEME'
     missing_keys = select{|_k, v| v.include?(missing)}.map(&:first)
     raise MissingValuesError, missing_keys unless missing_keys.empty?
